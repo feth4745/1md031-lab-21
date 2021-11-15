@@ -1,9 +1,10 @@
 @import 'https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap';
-
+@import 'https://fonts.googleapis.com/css2?family=Abel&display=swap';
 .borderpicture{ 
             opacity: 1;
             width: 100%;
 }
+
 header h1{
         position:absolute;
         margin-top: 0.75em;
@@ -28,16 +29,37 @@ header{
         
 }
 body{
-    color:gray;
-    font-family: Arial;
+    color:black;
+    font-family: Abel;
+    
     
 }/*empty*/
-#meals{
-        background-color: black;
-        color:white;
+body li{
+    font-size: 21px;
+}
+body .headline{
+            font-size: 42px;
+}
+body .name{
+        font-size: 30px;
     
 }
-button:hover {
+.meals{
+        background-color: white;
+        color:black;
+    
+}
+.headline{
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+}
+body ul{
+        list-style-type: circle;
+        
+}
+
+button:hover{
     background-color: #eafdec;
     cursor:pointer;
 }
@@ -48,4 +70,19 @@ section{
         margin:2em;
         margin-top:0;
 }
-
+.wrapper { 
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 300px 300px 300px;
+    background-color: white;
+    color: white;
+    justify-content:center;
+    
+ }
+ .box {
+     background-color: white;
+     color: black;
+     border-radius: 5px;
+     padding: 20px;
+     font-size: 150%;
+ }

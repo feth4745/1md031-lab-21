@@ -8,13 +8,22 @@
   <div id="map" v-on:click="addOrder">
     click here
   </div>
+  
 </template>
 
 <script>
 import Burger from '../components/Burger.vue'
 import io from 'socket.io-client'
-
 const socket = io();
+
+function MenuItem(n,url,kcal,gluten,lactose){
+    this.name=n;
+    this.url=url;
+    this.kcal=kcal;
+    this.gluten=Boolean(gluten);
+    this.lactose=Boolean(lactose);
+}
+const burgarlista=[new MenuItem("Burgare1","pic",300,false,false), new MenuItem("Burgare2","pic2",400,true,false), new MenuItem("Burgare3","pic3",450,false,true)];
 
 export default {
   name: 'Home',
@@ -23,10 +32,7 @@ export default {
   },
   data: function () {
     return {
-      burgers: [ {name: "small burger", kCal: 250},
-                 {name: "standard burger", kCal: 450},
-                 {name: "large burger", kCal: 850}
-               ]
+      burgers: burgarlista
     }
   },
   methods: {
