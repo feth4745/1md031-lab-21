@@ -1,14 +1,9 @@
 <template>
-  <div>
-    Burgers
-    <Burger v-for="burger in burgers"
-            v-bind:burger="burger" 
-            v-bind:key="burger.name"/>
-  </div>
+
   <div id="map" v-on:click="addOrder">
     click here
   </div> 
-<header>
+<header> 
             <section>
                 <h1>Marx</h1> 
                 <h2>Hamburgare</h2>
@@ -19,9 +14,10 @@
             
             <h2 class="headline">Välj din burgare:</h2>
                 <div class="wrapper">
-                <div style="float:left" class="box a">
-                    
-            </div>
+                    <Burger v-for="burger in burgers"
+                    v-bind:burger="burger"
+    
+                    v-bind:key="burger.name"/>
             </div>
             
         </section>
@@ -38,41 +34,41 @@
                 <div class="fyrkant a">
                 <p>
                 <label for="Full Name">Full Name</label><br>
-                    <input type="text" id="fullname" name="fn" required="required" placeholder="Name">
+                    <input type="text" id="fullname" v-model="fn" required="required" placeholder="Name">
                 </p>
                 <p>
                     <label for="">Epost-adress</label><br>
-                    <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+                    <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address">
                 </p>
                  <p>
                 <label for="">Street Name</label><br>
-                <input type="text" id="street name" name="sn" placeholder="street name">
+                <input type="text" id="street name" v-model="sn" placeholder="street name">
                 </p>
                  <p>
                     <label for="">House Number</label><br>
-                    <input type="number" id="lastname" name="hn" placeholder="house number">
+                    <input type="number" id="lastname" v-model="hn" placeholder="house number">
                 </p>
                     </div>
                     <br/>
                     <div class="fyrkant b">
-                    <p>Kön:</p>
-                <p> 
                     
-                    <input type="radio" id="kön" name="pn" placeholder="kön" value="Hen" checked>
-                    <label for="">Vill ej uppge</label><br>
-                    <input type="radio" id="kön" name="pn" placeholder="kön" value=Han >
-                    <label for="">Man</label><br>
-                    <input type="radio" id="kön" name="pn" placeholder="kön" Value=Hon >
-                    <label for="">Kvinna</label><br>
-                        
-                </p>
+                    <div id="väljkön" class="kundinfo">
+                <select v-model="selected" placeholder="Kön:">
+                        <option disabled value="">"Kön:"</option>
+                        <option>Vill ej uppge</option>
+                        <option>Man</option>
+                        <option>Kvinna</option>
+                </select>
+                        </div> 
+                    
+                
                     
                     </div> 
                     </div>
                 </form>
             </section>
             
-            <section >
+            <section style="text-align: center;">
             <button type="submit" style="align-content: center">
   <img src="https://www.nusr-et.com.tr/nusret_files/2016223144139545_burger.png" style="width: 25px">
   Send Order
@@ -89,24 +85,30 @@
 
 <script>
 import Burger from '../components/Burger.vue'
+    import menu from '../assets/menu.json'
 import io from 'socket.io-client'
 
 const socket = io();
 
-
-function MenuItem(name, pic, kcal, gluten, lactose){
+/*
+function MenuItem(name, pic, kcal, gluten, lactose, number){
     this.name=name;
     this.pic=pic;
     this.kcal=kcal;
-    this.Gluten=Boolean(gluten);
-    this.Lactose=Boolean(lactose);
+    this.gluten=Boolean(gluten);
+    this.lactose=Boolean(lactose);
+    this.ColumnNumber="box"+number%3;
+    
 }
-const burgers=[
-                new MenuItem("The beorgeoisie burger","https://www.mcdonalds.com/content/dam/nordic/nfl/nutrition/Items/Regular/mcd-sv-bearnaise-thickerbeef.jpg","700",true,true),
-                new MenuItem("The Soviet burger", "https://dabas.blob.core.windows.net/media/danora-sweden/12191%20toast_skinke_ost%20lavoppl%C3%B8selig.jpg", "300",false,false),
-                new MenuItem("The peasant burger","https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/hero/desktop/t-mcdonalds-Cheeseburger.jpg?$Product_Desktop$", "380", false,true)
-]
+    
 
+const burgers=[
+                new MenuItem("The beorgeoisie burger","https://cdn-bk-se-ordering.azureedge.net/media/x0ljohbg/bk-kiosk-checkout-machine-400x290_singel_roasted_onion_singlebeef.png","700",true,true,1),
+                new MenuItem("The Soviet burger", "https://dabas.blob.core.windows.net/media/danora-sweden/12191%20toast_skinke_ost%20lavoppl%C3%B8selig.jpg", "300",false,false,2),
+                new MenuItem("The peasant burger","https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/hero/desktop/t-mcdonalds-Cheeseburger.jpg?$Product_Desktop$", "380", false,true,3)
+]
+*/
+    
 export default {
   name: 'Home',
   components: {
@@ -114,7 +116,7 @@ export default {
   },
   data: function () {
     return {
-            burgers
+            burgers: menu
     }
   },
   methods: {
@@ -183,8 +185,9 @@ body li{
 body .headline{
             font-size: 42px;
 }
-body .name{
+.name{
         font-size: 30px;
+        color: black;
     
 }
 .meals{
