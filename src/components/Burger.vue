@@ -4,14 +4,15 @@
         <img v-bind:src="burger.pic" style="width: 250px; height:140px;object-fit: cover">
 
             <ul>
-                <li>pris</li>
-                <li>gluten {{burger.gluten}}</li>
-                <li>laktos</li>
+                <li>Pris:{{burger.pris}}</li>
+                <li v-if="burger.lactose">laktos</li>
+                <li v-if="burger.gluten">gluten</li>
+                <li>{{burger.kcal}} Kcal</li>
                 <button v-on:click="minusBurger" id="minusButton" style="align-content: center">
                     -
                 </button>
                 {{amountOrdered}}
-                <button v-on:click="addBurger" id="plusButton" style="align-content: center">
+                <button v-on:click="plusBurger" id="plusButton" style="align-content: center">
                     +
                 </button>
             </ul>
@@ -40,7 +41,7 @@ methods:{
             }
             );
     },
-    addBurger: function (){
+    plusBurger: function (){
     this.amountOrdered+=1;
     this.$emit('orderedBurger', 
             { name:  this.burger.name, 

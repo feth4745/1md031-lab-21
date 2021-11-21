@@ -3,20 +3,20 @@
 "name":"The beorgeoisie burger",
 "pic":"https://cdn-bk-se-ordering.azureedge.net/media/x0ljohbg/bk-kiosk-checkout-machine-400x290_singel_roasted_onion_singlebeef.png",
 "kcal":550,
-"gluten":true,
+"gluten":false,
 "lactose":true,
 "ColumnNumber":1,
-"burgersOrdered":0
+"pris": "100kr"
 }
 ,
 {
 "name":"The Soviet burger", 
 "pic":"https://dabas.blob.core.windows.net/media/danora-sweden/12191%20toast_skinke_ost%20lavoppl%C3%B8selig.jpg", 
 "kcal":300,
-"gluten":false,
+"gluten":true,
 "lactose":false,
 "ColumnNumber":2,
-"burgersOrdered":0
+"pris": "34 ransoneringskuponger"
 },
 {
 "name":"The peasant burger",
@@ -25,6 +25,6 @@
 "gluten":false,
 "lactose":true,
 "ColumnNumber":3,
-"burgersOrdered":0
+"pris": "typ 10kr"
 }
 ]

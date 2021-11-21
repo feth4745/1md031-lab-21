@@ -37,20 +37,12 @@
                     <label for="">Epost-adress</label><br>
                     <input type="email" id="email" v-model="email" required="required" placeholder="E-mail address">
                 </p>
-                 <p>
-                <label for="">Street Name</label><br>
-                <input type="text" id="street name" v-model="streetName" placeholder="street name">
-                </p>
-                 <p>
-                    <label for="">House Number</label><br>
-                    <input type="number" id="lastname" v-model="houseNumber" placeholder="house number">
-                </p>
                     </div>
                     <br/>
                     <div class="fyrkant b">
                     
                     <div id="väljkön" class="kundinfo">
-                <select v-model="selected">
+                <select v-model="kön">
                         <option disabled value="">Kön:</option>
                         <option>Vill ej uppge</option>
                         <option>Man</option>
@@ -64,11 +56,15 @@
                     </div>
                 </form>
             </section>
-            <div class="map" style="width:300px;height: 300px; overflow:scroll">
-                    <div id="map" v-on:click="addOrder" >
-                    Drop point:
-                    </div>
-                    </div>
+            <div id="wrapper3">
+                <div id="map" v-on:click="setLocation" >
+                </div>
+                <div id="punkt" v-bind:style="{ left: location.x + 'px',
+                top: location.y + 'px' }">
+                T
+                </div>
+                </div>
+            <br/>
             <section style="text-align: center;">
             <button v-on:click="sendOrder" style="align-content: center">
   <img src="https://www.nusr-et.com.tr/nusret_files/2016223144139545_burger.png" style="width: 25px">
@@ -119,15 +115,19 @@ export default {
   data: function () {
     return {
             burgers: menu,
-            orderedBurgers:{"The beorgeoisie burger":0, "The Soviet burger":0, "The peasant burger":0}
+            kön:"",
+            fullName:"",
+            email:"",  
+            orderedBurgers:{"The beorgeoisie burger":0, "The Soviet burger":0, "The peasant burger":0},
+            location:{x:0,y:0}
     }
   },
   methods: {
-    sendOrder: function() {
-    console.log(this.houseNumber)
-    
-          
-    },
+      setLocation: function(event){
+        const offset=event.target.getBoundingClientRect();
+        this.location.x = event.clientX-offset.left-5;
+        this.location.y = event.clientY-offset.top-5;
+            },
     addToOrder: function (event) {
     this.orderedBurgers[event.name] = event.amount;
     console.log(this.orderedBurgers)
@@ -136,13 +136,15 @@ export default {
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
-    addOrder: function (event) {
-      var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                    y: event.currentTarget.getBoundingClientRect().top};
-      socket.emit("addOrder", { orderId: this.getOrderNumber(),
-                                details: { x: event.clientX - 10 - offset.x,
-                                           y: event.clientY - 10 - offset.y },
-                                orderItems: ["Beans", "Curry"]
+    sendOrder: function (event) {
+        var ordNr=this.getOrderNumber;
+        socket.emit("addOrder", { orderId: ordNr,
+                                details: { x: this.location.x,
+                                           y: this.location.y },
+                                orderedItems: this.orderedBurgers,
+                                Kundinfo:{name:this.fullName,
+                                         email: this.email,
+                                         gender:this.kön}
                               }
                  );
     }
@@ -151,14 +153,7 @@ export default {
 </script>
 
 <style>
-  #map {
-    width: 1920px;
-    height: 1078px;
-    background: url("/img/polacks.jpg");
-  }
-    .map:hover{
-        cursor:pointer;
-    }
+  
 
 @import 'https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap';
 @import 'https://fonts.googleapis.com/css2?family=Abel&display=swap';
@@ -250,4 +245,32 @@ section{
      padding: 20px;
      font-size: 150%;
  }
+#wrapper3{
+        width:600px;
+        height: 300px; 
+        overflow:scroll;
+        position: relative;
+        
+    
+    }
+#map {
+        width: 1920px;
+        height: 1078px;
+        background: url("/img/polacks.jpg");
+  }
+    #map.hover{
+        cursor:pointer;
+    }
+#punkt{
+    background-color: black;
+    color: white;
+    text-align: center;
+    position: absolute;
+    font-size: 8px;
+    width:10px;
+    height:10px;
+    border-radius: 3px;
+    
+        
+    }
 </style>
