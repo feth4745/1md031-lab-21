@@ -1,8 +1,5 @@
 <template>
 
-  <div id="map" v-on:click="addOrder">
-    click here
-  </div> 
 <header> 
             <section>
                 <h1>Marx</h1> 
@@ -16,8 +13,8 @@
                 <div class="wrapper">
                     <Burger v-for="burger in burgers"
                     v-bind:burger="burger"
-    
-                    v-bind:key="burger.name"/>
+                    v-bind:key="burger.name"
+                    v-on:orderedBurger="addToOrder($event)"/>
             </div>
             
         </section>
@@ -34,27 +31,27 @@
                 <div class="fyrkant a">
                 <p>
                 <label for="Full Name">Full Name</label><br>
-                    <input type="text" id="fullname" v-model="fn" required="required" placeholder="Name">
+                    <input type="text" id="fullname" v-model="fullName" required="required" placeholder="Name">
                 </p>
                 <p>
                     <label for="">Epost-adress</label><br>
-                    <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address">
+                    <input type="email" id="email" v-model="email" required="required" placeholder="E-mail address">
                 </p>
                  <p>
                 <label for="">Street Name</label><br>
-                <input type="text" id="street name" v-model="sn" placeholder="street name">
+                <input type="text" id="street name" v-model="streetName" placeholder="street name">
                 </p>
                  <p>
                     <label for="">House Number</label><br>
-                    <input type="number" id="lastname" v-model="hn" placeholder="house number">
+                    <input type="number" id="lastname" v-model="houseNumber" placeholder="house number">
                 </p>
                     </div>
                     <br/>
                     <div class="fyrkant b">
                     
                     <div id="väljkön" class="kundinfo">
-                <select v-model="selected" placeholder="Kön:">
-                        <option disabled value="">"Kön:"</option>
+                <select v-model="selected">
+                        <option disabled value="">Kön:</option>
                         <option>Vill ej uppge</option>
                         <option>Man</option>
                         <option>Kvinna</option>
@@ -67,12 +64,17 @@
                     </div>
                 </form>
             </section>
-            
+            <div class="map" style="width:300px;height: 300px; overflow:scroll">
+                    <div id="map" v-on:click="addOrder" >
+                    Drop point:
+                    </div>
+                    </div>
             <section style="text-align: center;">
-            <button type="submit" style="align-content: center">
+            <button v-on:click="sendOrder" style="align-content: center">
   <img src="https://www.nusr-et.com.tr/nusret_files/2016223144139545_burger.png" style="width: 25px">
   Send Order
 </button>
+    
     </section>
         </main>
        
@@ -116,10 +118,21 @@ export default {
   },
   data: function () {
     return {
-            burgers: menu
+            burgers: menu,
+            orderedBurgers:{"The beorgeoisie burger":0, "The Soviet burger":0, "The peasant burger":0}
     }
   },
   methods: {
+    sendOrder: function() {
+    console.log(this.houseNumber)
+    
+          
+    },
+    addToOrder: function (event) {
+    this.orderedBurgers[event.name] = event.amount;
+    console.log(this.orderedBurgers)
+    },
+    
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
@@ -139,10 +152,14 @@ export default {
 
 <style>
   #map {
-    width: 300px;
-    height: 300px;
-    background-color: red;
+    width: 1920px;
+    height: 1078px;
+    background: url("/img/polacks.jpg");
   }
+    .map:hover{
+        cursor:pointer;
+    }
+
 @import 'https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap';
 @import 'https://fonts.googleapis.com/css2?family=Abel&display=swap';
 .borderpicture{ 
@@ -209,6 +226,7 @@ button:hover{
     background-color: #eafdec;
     cursor:pointer;
 }
+    v
 button{
         margin-left:3em;
 }
@@ -224,7 +242,7 @@ section{
     color: white;
     justify-content:center;
     
- }
+    }
  .box {
      background-color: white;
      color: black;

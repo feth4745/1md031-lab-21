@@ -5,7 +5,8 @@
 "kcal":550,
 "gluten":true,
 "lactose":true,
-"ColumnNumber":1
+"ColumnNumber":1,
+"burgersOrdered":0
 }
 ,
 {
@@ -14,7 +15,8 @@
 "kcal":300,
 "gluten":false,
 "lactose":false,
-"ColumnNumber":2
+"ColumnNumber":2,
+"burgersOrdered":0
 },
 {
 "name":"The peasant burger",
@@ -22,6 +24,7 @@
 "kcal":380,
 "gluten":false,
 "lactose":true,
-"ColumnNumber":3
+"ColumnNumber":3,
+"burgersOrdered":0
 }
 ]
