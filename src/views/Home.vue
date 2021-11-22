@@ -11,10 +11,12 @@
             
             <h2 class="headline">Välj din burgare:</h2>
                 <div class="wrapper">
-                    <Burger v-for="burger in burgers"
-                    v-bind:burger="burger"
-                    v-bind:key="burger.name"
-                    v-on:orderedBurger="addToOrder($event)"/>
+                    <Burger 
+                        v-for="burger in burgers"
+                        v-bind:burger="burger"
+                        v-bind:key="burger.name"
+                        v-on:orderedBurger="addToOrder($event)"
+                        />
             </div>
             
         </section>
@@ -27,7 +29,7 @@
             
             <section id="contact" style="text-align: center">
                 <form>
-                <div class="wrapper2">
+                
                 <div class="fyrkant a">
                 <p>
                 <label for="Full Name">Full Name</label><br>
@@ -49,24 +51,36 @@
                         <option>Kvinna</option>
                 </select>
                         </div> 
+                        <br>
+                    <div id="paymentMethod" class="kundinfo">
+                <select v-model="payMeth">
+                        <option disabled value="">Betalmedel</option>
+                        <option>Ransoneringskuponger</option>
+                        <option>Dollar</option>
+                        <option>Swish</option>
+                </select>
+                        </div> 
                     
                 
                     
                     </div> 
-                    </div>
+                  
                 </form>
             </section>
+            <div id="wrapper2">
             <div id="wrapper3">
                 <div id="map" v-on:click="setLocation" >
-                </div>
-                <div id="punkt" v-bind:style="{ left: location.x + 'px',
+                    
+                    <div id="punkt" v-bind:style="{ left: location.x + 'px',
                 top: location.y + 'px' }">
                 T
                 </div>
                 </div>
+                </div>
+                </div>
             <br/>
             <section style="text-align: center;">
-            <button v-on:click="sendOrder" style="align-content: center">
+            <button v-on:click="sendOrder" type="submit" style="align-content: center">
   <img src="https://www.nusr-et.com.tr/nusret_files/2016223144139545_burger.png" style="width: 25px">
   Send Order
 </button>
@@ -118,15 +132,15 @@ export default {
             kön:"",
             fullName:"",
             email:"",  
-            orderedBurgers:{"The beorgeoisie burger":0, "The Soviet burger":0, "The peasant burger":0},
+            orderedBurgers:{Beorgeoisieburger:0, Sovietburger:0, Peasantburger:0},
             location:{x:0,y:0}
     }
   },
   methods: {
       setLocation: function(event){
         const offset=event.target.getBoundingClientRect();
-        this.location.x = event.clientX-offset.left-5;
-        this.location.y = event.clientY-offset.top-5;
+        this.location.x = event.clientX-offset.x-5;
+        this.location.y = event.clientY-offset.y-5;
             },
     addToOrder: function (event) {
     this.orderedBurgers[event.name] = event.amount;
@@ -136,17 +150,26 @@ export default {
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
-    sendOrder: function (event) {
-        var ordNr=this.getOrderNumber;
-        socket.emit("addOrder", { orderId: ordNr,
-                                details: { x: this.location.x,
-                                           y: this.location.y },
+    sendOrder: function () {
+        
+        var orderId=this.getOrderNumber();
+        console.log({ orderId,
+                                details:{x: this.location.x,y:this.location.y},
                                 orderedItems: this.orderedBurgers,
-                                Kundinfo:{name:this.fullName,
+                                kundInfo:{name:this.fullName,
                                          email: this.email,
                                          gender:this.kön}
+                              },);
+        socket.emit("addOrder", { orderId,
+                                details:{x: this.location.x,y:this.location.y},
+                                orderedItems: this.orderedBurgers,
+                                kundInfo:{fullName:this.fullName,
+                                         email: this.email,
+                                         kön:this.kön,
+                                         payMeth:this.payMeth}
                               }
                  );
+        alert("Order sent!");
     }
   }
 }
@@ -273,4 +296,5 @@ section{
     
         
     }
+    #wrapper2{margin-left: 20em}
 </style>

@@ -1,30 +1,30 @@
 [
 {
-"name":"The beorgeoisie burger",
+"name":"Beorgeoisieburger",
 "pic":"https://cdn-bk-se-ordering.azureedge.net/media/x0ljohbg/bk-kiosk-checkout-machine-400x290_singel_roasted_onion_singlebeef.png",
 "kcal":550,
 "gluten":false,
 "lactose":true,
 "ColumnNumber":1,
-"pris": "100kr"
+"pris": " 100kr"
 }
 ,
 {
-"name":"The Soviet burger", 
+"name":"Sovietburger", 
 "pic":"https://dabas.blob.core.windows.net/media/danora-sweden/12191%20toast_skinke_ost%20lavoppl%C3%B8selig.jpg", 
 "kcal":300,
 "gluten":true,
 "lactose":false,
 "ColumnNumber":2,
-"pris": "34 ransoneringskuponger"
+"pris": " 34 ransoneringskuponger"
 },
 {
-"name":"The peasant burger",
+"name":"Peasantburger",
 "pic":"https://www.mcdonalds.com/is/image/content/dam/usa/nfl/nutrition/items/hero/desktop/t-mcdonalds-Cheeseburger.jpg?$Product_Desktop$", 
 "kcal":380,
 "gluten":false,
 "lactose":true,
 "ColumnNumber":3,
-"pris": "typ 10kr"
+"pris": " 1$"
 }
 ]
